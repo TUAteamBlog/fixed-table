@@ -1,0 +1,12 @@
+# outputs
+es/
+lib/
+dist/
+
+*.log
+coverage
+.history/
+.DS_Store
+node_modules
+package-lock.json
+docs/.vuepress/dist/

@@ -1,0 +1,141 @@
+@use 'sass:math';
+
+/* variables */
+
+// 默认使用 px，不使用 rem
+$useRem: false !default;
+
+// prefix
+$uiPrefix: '';
+
+// popup z-index
+$popupZIndex: 1000;
+
+/* font-family */
+$fontFamily: "Microsoft YaHei", Arial, 微软雅黑, 黑体;
+
+/* 色值 */
+$gray1: #141414;
+$gray2: #222222;
+$gray3: #313131;
+$gray4: #4a4a4a;
+$gray5: #8e8e8e;
+$gray6: #c5c5c5;
+$gray7: #e8e8e8;
+$gray8: #f6f6f6;
+$gray9: #fbfbfb;
+
+$blue1: #3A84FF;
+$blue2: #5090FD;
+$blue3: #90A5C9;
+$blue4: #EEF3F8;
+
+$gold1: #C38B3F;
+$gold2: #E8C06A;
+$gold3: #E6CB8F;
+
+$red1: #CE3434;
+$red2: #E4393C;
+
+$green1: #215F18;
+
+$orange1: #EDA200;
+
+/* mixins */
+
+// 单行文字溢出展示 ...
+@mixin text-overflow() {
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@mixin animation-effect-slide() {
+    &-slide-left,
+    &-slide-right {
+        &-leave-active {
+            position: absolute;
+            top: 0;
+        }
+    }
+
+    &-slide-left {
+        &-enter-active {
+            animation: #{$uiPrefix}-slide-enter 300ms ease-in-out reverse;
+        }
+        &-leave-active {
+            animation: #{$uiPrefix}-slide-leave 300ms ease-in-out reverse;
+        }
+    }
+    &-slide-right {
+        &-enter-active {
+            animation: #{$uiPrefix}-slide-leave 300ms ease-in-out;
+        }
+        &-leave-active {
+            animation: #{$uiPrefix}-slide-enter 300ms ease-in-out;
+        }
+    }
+}
+
+/* functions */
+
+// px 转 rem
+@function rem ($px) {
+    @if $useRem {
+        @return $px / 100px * 1rem
+    }
+
+    @return $px
+}
+
+// rem 转 px
+@function px ($rem) {
+    @if $useRem {
+        @return $rem
+    }
+
+    @return math.div($rem, 1rem) * 100px
+}
+
+// @source - [@Stephn-R](https://github.com/sass/sass/issues/1395#issuecomment-57483844)
+// @description converts 1 or more characters into a unicode
+// @markup {scss}
+// unicode("e655"); // "\e655"
+@function unicode($str){
+    @return unquote("\"")+unquote(str-insert($str, "\\", 1))+unquote("\"")
+}
+
+/* animations */
+
+// 透明度变化动效
+@keyframes #{$uiPrefix}-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes #{$uiPrefix}-fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+// 左右滑动切换动效
+@keyframes #{$uiPrefix}-slide-enter {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+
+        opacity: 0.01;
+    }
+}
+@keyframes #{$uiPrefix}-slide-leave {
+    0% {
+        transform: translateX(-100%);
+
+        opacity: 0.01;
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
