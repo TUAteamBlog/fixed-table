@@ -1,4 +1,4 @@
-import TuaTable from './Table.vue';
+import FixedTable from './Table.vue';
 
-export default TuaTable;
-export { TuaTable };
+export default FixedTable;
+export { FixedTable };
